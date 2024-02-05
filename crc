@@ -1,0 +1,85 @@
+import java.io.*;
+public class crc5
+{
+public static String reminder(String data,String g_poly,String rem,int g_polyl,int dl2)
+{
+ String result = data.substring(0,g_polyl);
+ System.out.println("data= "+data);
+ System.out.println("result= "+result);
+ for(int i=0;i<g_polyl;i++)
+ {
+  if(result.charAt(i)==g_poly.charAt(i))
+  {
+   rem = rem+"0";
+  }
+  else
+  {
+   rem = rem+"1";
+  }
+ } 
+ System.out.println("rem= "+rem);
+ while(g_polyl<=dl2)
+ {
+
+  if(rem.charAt(0)=='0')
+  {
+   System.out.println(rem.substring(1,rem.length()));
+   rem = rem.substring(1,rem.length())+String.valueOf(data.charAt(g_polyl));
+   g_polyl++;
+   System.out.println("new rem= "+rem);
+   
+   result=rem;
+   rem="";
+   int resultl=result.length();
+   if(result.charAt(0)=='1')
+   {
+    for(int i=0;i<resultl;i++)
+    {
+     if(result.charAt(i)==g_poly.charAt(i))
+     {
+      rem = rem+"0";
+     }
+     else
+     {
+      rem = rem+"1";
+     }
+    } 
+    System.out.println("rem f = "+rem);
+   }
+   else
+   {
+    rem=result;
+    System.out.println("rem f = "+rem);
+   }
+  }
+System.out.println("s"+g_polyl);
+System.out.println("l"+dl2);
+ }
+ return rem;
+}
+public static void main(String args[])
+{
+ try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in)))
+ {
+  String rem = "";
+  String datau = "";
+  System.out.println("enter the data");
+  String data = br.readLine();
+  System.out.println("enter the gen poly");
+  String g_poly = br.readLine();
+  int dl = data.length();
+  int k = dl-1;
+  for(int i=0;i<k;i++)
+  {
+   data=data+"0";
+  }
+  int g_polyl = g_poly.length();
+  int dl2 = data.length();
+  String r = reminder(data,g_poly,rem,g_polyl,dl2);
+ }
+ catch(IOException e)
+ {
+  System.out.println("error");
+ }
+}
+}
